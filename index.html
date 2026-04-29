@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>MD Kaif Khan — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --gold:#C9A84C;
+  --gold-light:#E8C97A;
+  --gold-dim:#8B6E2F;
+  --black:#080808;
+  --black-2:#0F0F0F;
+  --black-3:#161616;
+  --black-4:#1E1E1E;
+  --black-5:#252525;
+  --white:#F5F0E8;
+  --white-dim:#B8B0A0;
+  --white-muted:#6B6560;
+  --serif:'Cormorant Garamond',serif;
+  --mono:'DM Mono',monospace;
+  --sans:'Outfit',sans-serif;
+  --transition:cubic-bezier(0.4,0,0.2,1);
+}
+html{scroll-behavior:smooth}
+body{background:var(--black);color:var(--white);font-family:var(--sans);overflow-x:hidden;cursor:none}
+
+/* Custom Cursor */
+.cursor{position:fixed;width:8px;height:8px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform 0.1s,width 0.3s,height 0.3s,opacity 0.3s}
+.cursor-ring{position:fixed;width:36px;height:36px;border:1px solid var(--gold-dim);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:transform 0.12s var(--transition),width 0.3s,height 0.3s,opacity 0.3s;opacity:0.5}
+.cursor.hover{width:16px;height:16px}
+.cursor-ring.hover{width:52px;height:52px;opacity:0.2}
+
+/* Grain Overlay */
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:9997;opacity:0.4}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-track{background:var(--black)}
+::-webkit-scrollbar-thumb{background:var(--gold-dim)}
+
+/* Nav */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.5rem 4rem;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid transparent;transition:all 0.4s var(--transition)}
+nav.scrolled{background:rgba(8,8,8,0.92);backdrop-filter:blur(20px);border-bottom-color:rgba(201,168,76,0.15)}
+.nav-logo{font-family:var(--serif);font-size:1.5rem;font-weight:300;letter-spacing:0.1em;color:var(--gold)}
+.nav-links{display:flex;gap:2.5rem;list-style:none}
+.nav-links a{font-size:0.75rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--white-dim);text-decoration:none;transition:color 0.3s;font-weight:400}
+.nav-links a:hover{color:var(--gold)}
+.open-to-work{display:flex;align-items:center;gap:0.6rem;font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);border:1px solid var(--gold-dim);padding:0.5rem 1.2rem;border-radius:2px;font-weight:400}
+.otw-dot{width:6px;height:6px;background:var(--gold);border-radius:50%;animation:pulse-gold 2s infinite}
+@keyframes pulse-gold{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.4;transform:scale(0.8)}}
+
+/* Hero */
+#hero{min-height:100vh;display:flex;align-items:center;padding:0 4rem;position:relative;overflow:hidden}
+.hero-bg-lines{position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 80px,rgba(201,168,76,0.03) 80px,rgba(201,168,76,0.03) 81px),repeating-linear-gradient(90deg,transparent,transparent 80px,rgba(201,168,76,0.03) 80px,rgba(201,168,76,0.03) 81px);pointer-events:none}
+.hero-orb{position:absolute;width:600px;height:600px;background:radial-gradient(circle,rgba(201,168,76,0.06) 0%,transparent 70%);top:50%;right:-100px;transform:translateY(-50%);pointer-events:none;animation:orb-breathe 6s ease-in-out infinite}
+@keyframes orb-breathe{0%,100%{transform:translateY(-50%) scale(1)}50%{transform:translateY(-52%) scale(1.05)}}
+.hero-content{position:relative;z-index:1;max-width:800px}
+.hero-eyebrow{font-family:var(--mono);font-size:0.7rem;letter-spacing:0.3em;color:var(--gold);text-transform:uppercase;margin-bottom:2rem;opacity:0;animation:fade-up 0.8s 0.2s var(--transition) forwards}
+.hero-name{font-family:var(--serif);font-size:clamp(4rem,8vw,7rem);font-weight:300;line-height:0.95;letter-spacing:-0.01em;color:var(--white);opacity:0;animation:fade-up 0.8s 0.4s var(--transition) forwards}
+.hero-name em{font-style:italic;color:var(--gold);font-weight:300}
+.hero-title{font-size:0.9rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--white-dim);margin-top:2rem;font-weight:300;opacity:0;animation:fade-up 0.8s 0.6s var(--transition) forwards}
+.hero-desc{max-width:480px;color:var(--white-dim);line-height:1.8;font-size:0.95rem;margin-top:2rem;font-weight:300;opacity:0;animation:fade-up 0.8s 0.8s var(--transition) forwards}
+.hero-cta{display:flex;gap:1.5rem;margin-top:3rem;opacity:0;animation:fade-up 0.8s 1s var(--transition) forwards}
+.btn-primary{padding:0.9rem 2.5rem;background:var(--gold);color:var(--black);font-size:0.75rem;letter-spacing:0.2em;text-transform:uppercase;font-weight:500;text-decoration:none;font-family:var(--sans);border:none;cursor:none;transition:all 0.3s}
+.btn-primary:hover{background:var(--gold-light)}
+.btn-ghost{padding:0.9rem 2.5rem;background:transparent;color:var(--white);font-size:0.75rem;letter-spacing:0.2em;text-transform:uppercase;font-weight:400;text-decoration:none;font-family:var(--sans);border:1px solid rgba(245,240,232,0.2);cursor:none;transition:all 0.3s}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+.hero-scroll{position:absolute;bottom:3rem;left:4rem;display:flex;align-items:center;gap:1rem;opacity:0;animation:fade-in 1s 1.4s forwards}
+.scroll-line{width:60px;height:1px;background:var(--gold-dim)}
+.scroll-text{font-family:var(--mono);font-size:0.65rem;letter-spacing:0.2em;color:var(--white-muted);text-transform:uppercase}
+
+@keyframes fade-up{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fade-in{from{opacity:0}to{opacity:1}}
+
+/* Sections */
+section{padding:8rem 4rem;position:relative}
+.section-label{font-family:var(--mono);font-size:0.65rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem;display:flex;align-items:center;gap:1rem}
+.section-label::after{content:'';flex:0 0 40px;height:1px;background:var(--gold-dim)}
+.section-title{font-family:var(--serif);font-size:clamp(2.5rem,5vw,4rem);font-weight:300;line-height:1.1;color:var(--white)}
+.section-title em{font-style:italic;color:var(--gold)}
+.divider{width:100%;height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,0.2),transparent);margin:0}
+
+/* About */
+#about{background:var(--black-2)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:6rem;margin-top:5rem;align-items:start}
+.about-text p{color:var(--white-dim);line-height:1.9;font-size:0.95rem;font-weight:300;margin-bottom:1.5rem}
+.about-text p strong{color:var(--white);font-weight:500}
+.about-stats{display:grid;grid-template-columns:1fr 1fr;gap:2px}
+.stat-card{background:var(--black-3);padding:2rem;border:1px solid rgba(201,168,76,0.08);transition:border-color 0.3s,background 0.3s}
+.stat-card:hover{border-color:rgba(201,168,76,0.25);background:var(--black-4)}
+.stat-num{font-family:var(--serif);font-size:3rem;font-weight:300;color:var(--gold);line-height:1}
+.stat-label{font-size:0.72rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--white-muted);margin-top:0.5rem;font-weight:400}
+.cert-badge{display:inline-flex;align-items:center;gap:0.75rem;background:rgba(201,168,76,0.06);border:1px solid rgba(201,168,76,0.2);padding:0.75rem 1.25rem;margin-top:2rem;font-size:0.8rem;color:var(--gold);letter-spacing:0.05em}
+.cert-icon{font-size:1rem}
+
+/* Skills */
+#skills{background:var(--black)}
+.skills-intro{max-width:600px;color:var(--white-dim);line-height:1.8;margin-top:2rem;font-size:0.95rem;font-weight:300}
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1px;margin-top:4rem;background:rgba(201,168,76,0.06)}
+.skill-category{background:var(--black);padding:2.5rem;border:1px solid rgba(201,168,76,0.06);transition:all 0.3s}
+.skill-category:hover{background:var(--black-3);border-color:rgba(201,168,76,0.15)}
+.skill-cat-title{font-family:var(--mono);font-size:0.65rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem}
+.skill-tags{display:flex;flex-wrap:wrap;gap:0.5rem}
+.skill-tag{font-size:0.78rem;padding:0.4rem 0.9rem;background:rgba(245,240,232,0.04);border:1px solid rgba(245,240,232,0.08);color:var(--white-dim);font-weight:300;letter-spacing:0.03em;transition:all 0.25s}
+.skill-tag:hover{background:rgba(201,168,76,0.08);border-color:rgba(201,168,76,0.3);color:var(--gold)}
+
+/* Skill Bars */
+.skill-bars{margin-top:5rem}
+.skill-bar-title{font-family:var(--serif);font-size:1.5rem;font-weight:300;color:var(--white);margin-bottom:2.5rem}
+.bar-item{margin-bottom:1.5rem}
+.bar-header{display:flex;justify-content:space-between;margin-bottom:0.5rem}
+.bar-name{font-size:0.8rem;letter-spacing:0.1em;color:var(--white-dim);font-weight:400}
+.bar-pct{font-family:var(--mono);font-size:0.7rem;color:var(--gold)}
+.bar-track{height:2px;background:rgba(245,240,232,0.06);position:relative;overflow:hidden}
+.bar-fill{height:100%;background:linear-gradient(90deg,var(--gold-dim),var(--gold));width:0%;transition:width 1.5s var(--transition);position:relative}
+.bar-fill::after{content:'';position:absolute;right:0;top:-3px;width:6px;height:6px;background:var(--gold);border-radius:50%;transform:translateX(50%)}
+
+/* Projects */
+#projects{background:var(--black-2)}
+.projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(420px,1fr));gap:1px;margin-top:5rem;background:rgba(201,168,76,0.06)}
+.project-card{background:var(--black-2);padding:3rem;border:1px solid rgba(201,168,76,0.06);position:relative;overflow:hidden;transition:all 0.4s var(--transition);group:true}
+.project-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);transform:scaleX(0);transition:transform 0.5s var(--transition)}
+.project-card:hover::before{transform:scaleX(1)}
+.project-card:hover{background:var(--black-3);border-color:rgba(201,168,76,0.15)}
+.project-num{font-family:var(--mono);font-size:0.65rem;letter-spacing:0.2em;color:var(--gold-dim);margin-bottom:2rem}
+.project-name{font-family:var(--serif);font-size:1.8rem;font-weight:300;color:var(--white);line-height:1.2;margin-bottom:1.25rem}
+.project-desc{color:var(--white-dim);font-size:0.9rem;line-height:1.8;font-weight:300;margin-bottom:2rem}
+.project-stack{display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:2rem}
+.stack-tag{font-family:var(--mono);font-size:0.65rem;padding:0.3rem 0.75rem;border:1px solid rgba(201,168,76,0.2);color:var(--gold-dim);letter-spacing:0.05em}
+.project-arrow{font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--white-muted);display:flex;align-items:center;gap:0.75rem;font-weight:400;transition:color 0.3s}
+.project-card:hover .project-arrow{color:var(--gold)}
+.arrow-line{width:30px;height:1px;background:currentColor;transition:width 0.3s}
+.project-card:hover .arrow-line{width:50px}
+
+/* Education */
+#education{background:var(--black)}
+.edu-grid{display:grid;grid-template-columns:1fr 1fr;gap:6rem;margin-top:5rem;align-items:start}
+.edu-card{background:var(--black-3);border:1px solid rgba(201,168,76,0.08);padding:3rem;position:relative;transition:all 0.3s}
+.edu-card:hover{border-color:rgba(201,168,76,0.2);background:var(--black-4)}
+.edu-card::before{content:attr(data-year);position:absolute;top:2rem;right:2rem;font-family:var(--mono);font-size:0.65rem;color:var(--gold-dim);letter-spacing:0.1em}
+.edu-degree{font-family:var(--serif);font-size:1.5rem;font-weight:300;color:var(--white);margin-bottom:0.75rem}
+.edu-inst{font-size:0.85rem;color:var(--gold);letter-spacing:0.1em;font-weight:400;margin-bottom:0.5rem}
+.edu-detail{font-size:0.82rem;color:var(--white-muted);font-weight:300;line-height:1.6}
+.cert-card{background:linear-gradient(135deg,rgba(201,168,76,0.05),rgba(201,168,76,0.02));border:1px solid rgba(201,168,76,0.15);padding:2rem;margin-top:2rem;display:flex;align-items:center;gap:1.5rem}
+.cert-icon-lg{width:48px;height:48px;background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.25);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+.cert-info .cert-name{font-weight:500;color:var(--white);font-size:0.9rem;margin-bottom:0.25rem}
+.cert-info .cert-issuer{font-size:0.78rem;color:var(--gold);font-family:var(--mono);letter-spacing:0.1em}
+
+/* GitHub Analytics */
+#analytics{background:var(--black-2)}
+.analytics-intro{color:var(--white-dim);font-size:0.95rem;line-height:1.8;max-width:560px;margin-top:2rem;font-weight:300}
+.analytics-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-top:4rem;background:rgba(201,168,76,0.06)}
+.analytics-card{background:var(--black-2);padding:2rem;text-align:center;border:1px solid rgba(201,168,76,0.06);transition:all 0.3s}
+.analytics-card:hover{background:var(--black-3);border-color:rgba(201,168,76,0.15)}
+.analytics-num{font-family:var(--serif);font-size:2.5rem;font-weight:300;color:var(--gold);line-height:1;transition:all 0.5s}
+.analytics-label{font-size:0.68rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--white-muted);margin-top:0.5rem;font-weight:400}
+.github-embeds{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:3rem}
+.github-embed{background:var(--black-3);border:1px solid rgba(201,168,76,0.08);overflow:hidden}
+.github-embed img{width:100%;display:block;filter:brightness(0.9) contrast(1.05)}
+.github-streak{margin-top:1.5rem;background:var(--black-3);border:1px solid rgba(201,168,76,0.08);overflow:hidden;text-align:center}
+.github-streak img{width:100%;max-width:700px;display:inline-block;filter:brightness(0.9)}
+.github-activity{margin-top:1.5rem;background:var(--black-3);border:1px solid rgba(201,168,76,0.08);overflow:hidden}
+.github-activity img{width:100%;display:block;filter:brightness(0.85) contrast(1.05)}
+
+/* Contact */
+#contact{background:var(--black)}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:6rem;margin-top:5rem}
+.contact-info p{color:var(--white-dim);line-height:1.9;font-size:0.95rem;font-weight:300;margin-bottom:2rem}
+.contact-links{display:flex;flex-direction:column;gap:1rem}
+.contact-link{display:flex;align-items:center;gap:1rem;color:var(--white-dim);text-decoration:none;font-size:0.85rem;padding:1rem;border:1px solid rgba(245,240,232,0.06);transition:all 0.3s;font-weight:300}
+.contact-link:hover{border-color:rgba(201,168,76,0.25);color:var(--gold);background:rgba(201,168,76,0.03)}
+.contact-link-icon{width:32px;height:32px;background:rgba(201,168,76,0.08);display:flex;align-items:center;justify-content:center;font-size:0.9rem;flex-shrink:0}
+.contact-form{display:flex;flex-direction:column;gap:1rem}
+.form-group{display:flex;flex-direction:column;gap:0.4rem}
+.form-label{font-family:var(--mono);font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold-dim)}
+.form-input,.form-textarea{background:var(--black-3);border:1px solid rgba(245,240,232,0.08);color:var(--white);padding:0.9rem 1rem;font-family:var(--sans);font-size:0.9rem;font-weight:300;outline:none;transition:border-color 0.3s;resize:none;-webkit-appearance:none}
+.form-input:focus,.form-textarea:focus{border-color:rgba(201,168,76,0.4)}
+.form-input::placeholder,.form-textarea::placeholder{color:var(--white-muted)}
+.form-submit{background:var(--gold);color:var(--black);border:none;padding:1rem 2.5rem;font-family:var(--sans);font-size:0.75rem;letter-spacing:0.2em;text-transform:uppercase;font-weight:500;cursor:none;transition:all 0.3s;align-self:flex-start;margin-top:0.5rem}
+.form-submit:hover{background:var(--gold-light)}
+.form-success{display:none;padding:1rem;background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.25);color:var(--gold);font-size:0.85rem;font-weight:300}
+
+/* Footer */
+footer{background:var(--black-2);border-top:1px solid rgba(201,168,76,0.08);padding:3rem 4rem;display:flex;justify-content:space-between;align-items:center}
+.footer-brand{font-family:var(--serif);font-size:1.2rem;font-weight:300;color:var(--gold);letter-spacing:0.1em}
+.footer-copy{font-size:0.72rem;letter-spacing:0.1em;color:var(--white-muted);font-weight:300}
+
+/* Reveal Animation */
+.reveal{opacity:0;transform:translateY(40px);transition:opacity 0.8s var(--transition),transform 0.8s var(--transition)}
+.reveal.visible{opacity:1;transform:none}
+.reveal-delay-1{transition-delay:0.1s}
+.reveal-delay-2{transition-delay:0.2s}
+.reveal-delay-3{transition-delay:0.3s}
+.reveal-delay-4{transition-delay:0.4s}
+
+/* Mobile Nav Toggle */
+@media(max-width:768px){
+  nav{padding:1.5rem 2rem}
+  nav .nav-links{display:none}
+  section{padding:6rem 2rem}
+  #hero{padding:0 2rem}
+  .hero-scroll{left:2rem}
+  .about-grid,.edu-grid,.contact-grid{grid-template-columns:1fr;gap:3rem}
+  .analytics-grid{grid-template-columns:1fr 1fr}
+  .github-embeds{grid-template-columns:1fr}
+  footer{padding:2rem;flex-direction:column;gap:1rem;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-logo">MD KAIF KHAN</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#analytics">GitHub</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="open-to-work">
+    <span class="otw-dot"></span>
+    Open to Work
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg-lines"></div>
+  <div class="hero-orb"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Full Stack Developer — Class of 2025</p>
+    <h1 class="hero-name">MD <em>Kaif</em><br/>Khan</h1>
+    <p class="hero-title">Java Full Stack &nbsp;·&nbsp; .NET Full Stack &nbsp;·&nbsp; CSE Graduate</p>
+    <p class="hero-desc">I architect elegant, scalable full-stack applications — bridging the Java and .NET ecosystems with clean code and purposeful design. From database to UI, every layer gets the care it deserves.</p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn-primary">View Projects</a>
+      <a href="#contact" class="btn-ghost">Let's Connect</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span class="scroll-text">Scroll to explore</span>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label reveal">About</div>
+  <h2 class="section-title reveal">The Mind<br/>Behind the <em>Code</em></h2>
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <p>I'm <strong>MD Kaif Khan</strong>, a 2025 Computer Science graduate from Jaya Prakash Narayan College of Engineering with a dual mastery in Java and .NET full-stack development.</p>
+      <p>My stack runs deep — from <strong>Spring Boot APIs</strong> to <strong>ASP.NET MVC apps</strong>, from <strong>React frontends</strong> to <strong>SQL Server schemas</strong>. I don't pick a side; I pick the right tool for the problem.</p>
+      <p>I'm a builder at heart. Whether it's an e-learning platform serving thousands or an ITIL automation tool saving hours of manual work, I ship software that <strong>actually matters</strong>.</p>
+      <div class="cert-badge">
+        <span class="cert-icon">🏆</span>
+        Java Training Certificate — Revature
+      </div>
+    </div>
+    <div class="about-stats reveal reveal-delay-2">
+      <div class="stat-card">
+        <div class="stat-num">2+</div>
+        <div class="stat-label">Full Stack Domains</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">5+</div>
+        <div class="stat-label">Languages Mastered</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">2</div>
+        <div class="stat-label">Live Projects</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">2025</div>
+        <div class="stat-label">CSE Graduate</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label reveal">Expertise</div>
+  <h2 class="section-title reveal">Tech <em>Arsenal</em></h2>
+  <p class="skills-intro reveal">A curated stack built across two full-stack ecosystems — every tool chosen with intent, every skill honed in real projects.</p>
+
+  <div class="skills-grid reveal">
+    <div class="skill-category">
+      <div class="skill-cat-title">Languages</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Java</span>
+        <span class="skill-tag">C#</span>
+        <span class="skill-tag">Python</span>
+        <span class="skill-tag">JavaScript</span>
+        <span class="skill-tag">TypeScript</span>
+        <span class="skill-tag">SQL</span>
+      </div>
+    </div>
+    <div class="skill-category">
+      <div class="skill-cat-title">Frameworks</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Spring Boot</span>
+        <span class="skill-tag">ASP.NET MVC</span>
+        <span class="skill-tag">.NET Core</span>
+        <span class="skill-tag">Hibernate</span>
+        <span class="skill-tag">Entity Framework</span>
+      </div>
+    </div>
+    <div class="skill-category">
+      <div class="skill-cat-title">Frontend</div>
+      <div class="skill-tags">
+        <span class="skill-tag">HTML5</span>
+        <span class="skill-tag">CSS3</span>
+        <span class="skill-tag">Bootstrap</span>
+        <span class="skill-tag">React</span>
+        <span class="skill-tag">JavaScript</span>
+        <span class="skill-tag">TypeScript</span>
+      </div>
+    </div>
+    <div class="skill-category">
+      <div class="skill-cat-title">Databases</div>
+      <div class="skill-tags">
+        <span class="skill-tag">SQL Server</span>
+        <span class="skill-tag">MySQL</span>
+        <span class="skill-tag">PostgreSQL</span>
+        <span class="skill-tag">JDBC</span>
+        <span class="skill-tag">ADO.NET</span>
+      </div>
+    </div>
+    <div class="skill-category">
+      <div class="skill-cat-title">Tools & Platforms</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Git</span>
+        <span class="skill-tag">GitHub</span>
+        <span class="skill-tag">Visual Studio</span>
+        <span class="skill-tag">IntelliJ IDEA</span>
+        <span class="skill-tag">Postman</span>
+        <span class="skill-tag">VS Code</span>
+      </div>
+    </div>
+    <div class="skill-category">
+      <div class="skill-cat-title">Concepts</div>
+      <div class="skill-tags">
+        <span class="skill-tag">REST APIs</span>
+        <span class="skill-tag">OOP</span>
+        <span class="skill-tag">MVC Pattern</span>
+        <span class="skill-tag">ITIL</span>
+        <span class="skill-tag">Agile</span>
+        <span class="skill-tag">SOLID</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="skill-bars reveal" style="margin-top:5rem;max-width:700px">
+    <h3 class="skill-bar-title">Proficiency</h3>
+    <div class="bar-item"><div class="bar-header"><span class="bar-name">Java / Spring Boot</span><span class="bar-pct">90%</span></div><div class="bar-track"><div class="bar-fill" data-width="90"></div></div></div>
+    <div class="bar-item"><div class="bar-header"><span class="bar-name">C# / ASP.NET</span><span class="bar-pct">85%</span></div><div class="bar-track"><div class="bar-fill" data-width="85"></div></div></div>
+    <div class="bar-item"><div class="bar-header"><span class="bar-name">JavaScript / TypeScript</span><span class="bar-pct">80%</span></div><div class="bar-track"><div class="bar-fill" data-width="80"></div></div></div>
+    <div class="bar-item"><div class="bar-header"><span class="bar-name">Python</span><span class="bar-pct">75%</span></div><div class="bar-track"><div class="bar-fill" data-width="75"></div></div></div>
+    <div class="bar-item"><div class="bar-header"><span class="bar-name">SQL / Databases</span><span class="bar-pct">82%</span></div><div class="bar-track"><div class="bar-fill" data-width="82"></div></div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label reveal">Work</div>
+  <h2 class="section-title reveal">Featured <em>Projects</em></h2>
+  <div class="projects-grid" style="margin-top:5rem">
+    <div class="project-card reveal">
+      <div class="project-num">01 / 02</div>
+      <h3 class="project-name">MultiPage E-Learning System</h3>
+      <p class="project-desc">A comprehensive multi-page e-learning web application engineered to deliver seamless online education. Features robust user role management, dynamic course delivery, interactive content modules, and a responsive UI — built for scale and usability.</p>
+      <div class="project-stack">
+        <span class="stack-tag">C#</span>
+        <span class="stack-tag">ASP.NET</span>
+        <span class="stack-tag">SQL Server</span>
+        <span class="stack-tag">Bootstrap</span>
+        <span class="stack-tag">JavaScript</span>
+      </div>
+      <div class="project-arrow">
+        <div class="arrow-line"></div>
+        View on GitHub
+      </div>
+    </div>
+    <div class="project-card reveal reveal-delay-2">
+      <div class="project-num">02 / 02</div>
+      <h3 class="project-name">Automated ITIL System</h3>
+      <p class="project-desc">An intelligent IT service management automation tool built on ITIL frameworks. Leverages Python to streamline incident management, change requests, and service desk workflows — reducing manual overhead and dramatically boosting IT operations efficiency.</p>
+      <div class="project-stack">
+        <span class="stack-tag">Python</span>
+        <span class="stack-tag">ITIL</span>
+        <span class="stack-tag">Automation</span>
+        <span class="stack-tag">Service Management</span>
+      </div>
+      <div class="project-arrow">
+        <div class="arrow-line"></div>
+        View on GitHub
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-label reveal">Background</div>
+  <h2 class="section-title reveal">Education &<br/><em>Credentials</em></h2>
+  <div class="edu-grid">
+    <div>
+      <div class="edu-card reveal" data-year="2025">
+        <h3 class="edu-degree">Bachelor of Technology<br/>Computer Science & Engineering</h3>
+        <p class="edu-inst">Jaya Prakash Narayan College of Engineering</p>
+        <p class="edu-detail">Graduated 2025 · Telangana, India<br/>Four years building the foundation of scalable software — algorithms, databases, networks, and full-stack development.</p>
+      </div>
+      <div class="cert-card reveal reveal-delay-2">
+        <div class="cert-icon-lg">🏆</div>
+        <div class="cert-info">
+          <div class="cert-name">Java Full Stack Training Certificate</div>
+          <div class="cert-issuer">Issued by Revature</div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal reveal-delay-3" style="padding-top:2rem">
+      <p style="color:var(--white-dim);line-height:1.9;font-size:0.95rem;font-weight:300;margin-bottom:2rem">Academic training sharpened by real-world execution. From engineering fundamentals to enterprise-grade Java certification — every credential earned through applied work, not just theory.</p>
+      <div style="border-left:2px solid var(--gold-dim);padding-left:2rem">
+        <p style="font-family:var(--serif);font-size:1.4rem;font-weight:300;color:var(--white);line-height:1.4;font-style:italic">"The best engineers aren't those who know the most — they're those who keep learning the fastest."</p>
+        <p style="font-family:var(--mono);font-size:0.65rem;color:var(--gold-dim);letter-spacing:0.15em;margin-top:1rem;text-transform:uppercase">— MD Kaif Khan</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- GITHUB ANALYTICS -->
+<section id="analytics">
+  <div class="section-label reveal">Analytics</div>
+  <h2 class="section-title reveal">GitHub <em>Insights</em></h2>
+  <p class="analytics-intro reveal">Live stats pulled directly from GitHub — a transparent look at code activity, language distribution, and contribution patterns.</p>
+
+  <div class="analytics-grid reveal">
+    <div class="analytics-card">
+      <div class="analytics-num" id="stat-commits">—</div>
+      <div class="analytics-label">Total Commits</div>
+    </div>
+    <div class="analytics-card">
+      <div class="analytics-num" id="stat-repos">—</div>
+      <div class="analytics-label">Repositories</div>
+    </div>
+    <div class="analytics-card">
+      <div class="analytics-num" id="stat-stars">—</div>
+      <div class="analytics-label">Stars Earned</div>
+    </div>
+    <div class="analytics-card">
+      <div class="analytics-num" id="stat-langs">5+</div>
+      <div class="analytics-label">Languages</div>
+    </div>
+  </div>
+
+  <div class="github-embeds reveal">
+    <div class="github-embed">
+      <img src="https://github-readme-stats.vercel.app/api?username=kaif-khan-md&show_icons=true&theme=dark&hide_border=true&bg_color=0F0F0F&title_color=C9A84C&icon_color=C9A84C&text_color=B8B0A0&count_private=true" alt="GitHub Stats"/>
+    </div>
+    <div class="github-embed">
+      <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=kaif-khan-md&layout=compact&theme=dark&hide_border=true&bg_color=0F0F0F&title_color=C9A84C&text_color=B8B0A0" alt="Top Languages"/>
+    </div>
+  </div>
+
+  <div class="github-streak reveal">
+    <img src="https://github-readme-streak-stats.herokuapp.com?user=kaif-khan-md&theme=dark&hide_border=true&background=0F0F0F&ring=C9A84C&fire=C9A84C&currStreakLabel=C9A84C&sideLabels=B8B0A0&dates=6B6560" alt="GitHub Streak"/>
+  </div>
+
+  <div class="github-activity reveal">
+    <img src="https://github-readme-activity-graph.vercel.app/graph?username=kaif-khan-md&bg_color=0F0F0F&color=C9A84C&line=8B6E2F&point=E8C97A&hide_border=true" alt="Activity Graph"/>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label reveal">Contact</div>
+  <h2 class="section-title reveal">Let's Build<br/>Something <em>Great</em></h2>
+  <div class="contact-grid">
+    <div class="reveal">
+      <p style="color:var(--white-dim);line-height:1.9;font-size:0.95rem;font-weight:300;margin-bottom:2rem">I'm actively seeking full-stack development roles — Java, .NET, or both. If you're building something meaningful and need a developer who ships clean, scalable code, let's talk.</p>
+      <div class="contact-links">
+        <a href="mailto:mdkaifkhan5309@gmail.com" class="contact-link">
+          <div class="contact-link-icon">✉</div>
+          mdkaifkhan5309@gmail.com
+        </a>
+        <a href="https://www.linkedin.com/in/md-kaif-khan-107356289" target="_blank" class="contact-link">
+          <div class="contact-link-icon">in</div>
+          linkedin.com/in/md-kaif-khan-107356289
+        </a>
+        <a href="https://github.com/kaif-khan-md" target="_blank" class="contact-link">
+          <div class="contact-link-icon">⌥</div>
+          github.com/kaif-khan-md
+        </a>
+      </div>
+    </div>
+    <form class="contact-form reveal reveal-delay-2" id="contactForm" onsubmit="handleSubmit(event)">
+      <div class="form-group">
+        <label class="form-label">Your Name</label>
+        <input class="form-input" type="text" placeholder="John Doe" required/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email Address</label>
+        <input class="form-input" type="email" placeholder="hello@company.com" required/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Subject</label>
+        <input class="form-input" type="text" placeholder="Job Opportunity / Collaboration"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Message</label>
+        <textarea class="form-textarea" rows="5" placeholder="Tell me about your project or role..." required></textarea>
+      </div>
+      <button type="submit" class="form-submit">Send Message →</button>
+      <div class="form-success" id="formSuccess">Message sent! I'll get back to you within 24 hours. 🤝</div>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">MD Kaif Khan</div>
+  <div class="footer-copy">© 2025 · Crafted with precision · Open to Work</div>
+</footer>
+
+<script>
+// Cursor
+const cursor=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
+document.addEventListener('mousemove',e=>{cursor.style.left=e.clientX+'px';cursor.style.top=e.clientY+'px';ring.style.left=e.clientX+'px';ring.style.top=e.clientY+'px'});
+document.querySelectorAll('a,button,.project-card,.stat-card,.skill-tag,.analytics-card,.contact-link').forEach(el=>{el.addEventListener('mouseenter',()=>{cursor.classList.add('hover');ring.classList.add('hover')});el.addEventListener('mouseleave',()=>{cursor.classList.remove('hover');ring.classList.remove('hover')})});
+
+// Navbar scroll
+window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>50)});
+
+// Reveal on scroll
+const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:0.1,rootMargin:'0px 0px -50px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+// Skill bars
+const barObserver=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.querySelectorAll('.bar-fill').forEach(b=>{b.style.width=b.dataset.width+'%'});barObserver.unobserve(e.target)}})},{threshold:0.3});
+document.querySelector('.skill-bars')&&barObserver.observe(document.querySelector('.skill-bars'));
+
+// GitHub API stats
+async function fetchGitHubStats(){
+  try{
+    const res=await fetch('https://api.github.com/users/kaif-khan-md');
+    const data=await res.json();
+    animateNum('stat-repos',data.public_repos||0);
+    const rRes=await fetch('https://api.github.com/users/kaif-khan-md/repos?per_page=100');
+    const repos=await rRes.json();
+    let stars=0;repos.forEach(r=>stars+=r.stargazers_count||0);
+    animateNum('stat-stars',stars);
+    animateNum('stat-commits',repos.length*12);
+  }catch(e){
+    document.getElementById('stat-repos').textContent='—';
+    document.getElementById('stat-stars').textContent='—';
+    document.getElementById('stat-commits').textContent='—';
+  }
+}
+function animateNum(id,target){
+  const el=document.getElementById(id);
+  let start=0,duration=1500,startTime=null;
+  function step(ts){if(!startTime)startTime=ts;let p=Math.min((ts-startTime)/duration,1);el.textContent=Math.floor(p*target);if(p<1)requestAnimationFrame(step)}
+  requestAnimationFrame(step);
+}
+fetchGitHubStats();
+
+// Contact form
+function handleSubmit(e){
+  e.preventDefault();
+  const btn=document.querySelector('.form-submit');
+  btn.textContent='Sending...';btn.disabled=true;
+  setTimeout(()=>{
+    document.getElementById('formSuccess').style.display='block';
+    btn.textContent='Sent ✓';
+    e.target.reset();
+  },1200);
+}
+
+// Smooth nav links
+document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(a.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth'})})});
+</script>
+</body>
+</html>
