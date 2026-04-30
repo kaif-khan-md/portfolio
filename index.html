@@ -592,15 +592,31 @@ function animateNum(id,target){
 fetchGitHubStats();
 
 // Contact form
-function handleSubmit(e){
+async function handleSubmit(e){
   e.preventDefault();
   const btn=document.querySelector('.form-submit');
+  const successEl=document.getElementById('formSuccess');
+  const errorEl=document.getElementById('formError');
   btn.textContent='Sending...';btn.disabled=true;
-  setTimeout(()=>{
-    document.getElementById('formSuccess').style.display='block';
-    btn.textContent='Sent ✓';
-    e.target.reset();
-  },1200);
+  errorEl.style.display='none';
+  try{
+    const res=await fetch('https://formspree.io/f/mnjwawbl',{
+      method:'POST',
+      headers:{'Accept':'application/json','Content-Type':'application/json'},
+      body:JSON.stringify(Object.fromEntries(new FormData(e.target)))
+    });
+    if(res.ok){
+      successEl.style.display='block';
+      btn.textContent='Sent ✓';
+      e.target.reset();
+    } else {
+      throw new Error();
+    }
+  }catch(err){
+    btn.textContent='Send Message →';
+    btn.disabled=false;
+    errorEl.style.display='block';
+  }
 }
 
 // Smooth nav links
